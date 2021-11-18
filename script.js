@@ -36,23 +36,30 @@ function loadEvent() {
     */
    
    const root = document.getElementById("root");
-   const list = generateArray(100);
-   const num = list.length;
-   var digits = (num, count = 0) => {
+   const list = generateArray(10001);
+   const num = list.length-1;
+   var highestDig = (num, count = 0) => {
        if (num) {
-           return digits(Math.floor(num / 10), ++count);
+           return highestDig(Math.floor(num / 10), ++count);
         };
         return count;
     }
     var nulla = '0'
     
-   console.log(digits(num));
-   console.log(list);
-   
-   
-   if (list[0]  !== "error") {
-       for (const item of list) {
-           root.insertAdjacentHTML("beforeend", `<div>${nulla.repeat(digits(num))+item}</div>`);
+    console.log(highestDig(num));
+    console.log(list);
+    
+    
+    if (list[0]  !== "error") {
+        for (const item of list) {
+            var itemDig = (item, count = 0) => {
+                if (item) {
+                    return itemDig(Math.floor(item / 10), ++count);
+                 };
+                 return count;
+             }
+             console.log(itemDig(item));
+           root.insertAdjacentHTML("beforeend", `<div>${nulla.repeat(highestDig(num)-itemDig(item))+item}</div>`);
            // root.insertAdjacentHTML("beforeend", ('0' + item).slice(-digit)); mögé rakja nem bele
         }
     }
